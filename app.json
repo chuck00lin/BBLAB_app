@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "I2PDMx",
+    "slug": "i2pdmx",
+    "version": "2.4",
+    "orientation": "portrait",
+    "icon": "./assets/icon_512.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#303030"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ntu.bime.pest",
+      "buildNumber": "2.4.1"
+    },
+    "android": {
+      "package": "com.ntubime405.i2pdmx",
+      "versionCode": 5,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
