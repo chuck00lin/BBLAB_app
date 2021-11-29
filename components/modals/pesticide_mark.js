@@ -23,6 +23,9 @@ import RadioForm, {
   RadioButtonLabel
 } from "react-native-simple-radio-button";
 import moment from "moment";
+import DateTimePicker from '@react-native-community/datetimepicker';
+//import DatePicker from 'rsuite/DatePicker';
+
 
 var radio_colors = ["#ff0000", "#000000"];
 
@@ -121,6 +124,21 @@ export default class PesticideMark extends Component {
         }
       });
   };
+  //test timepicker
+  onChangeTemporalDate1 = (e, d) => {
+    var typex = e.type;
+    if (Platform.OS === "android") {
+      if (typex == "set") {
+        var datex = new moment(d);
+        console.log(datex)
+      }
+    } else {
+      var datex = new moment(d);
+      console.log(datex)
+    }
+  };
+
+  //end
 
   render() {
     return (
@@ -137,7 +155,7 @@ export default class PesticideMark extends Component {
             <View
               style={{
                 backgroundColor: "rgba(217,217,217,1)",
-                height: 230,
+                height: 250,
                 width: 300,
                 borderRadius: 10,
                 padding: 10,
@@ -147,10 +165,33 @@ export default class PesticideMark extends Component {
               <Text allowFontScaling={false} style={styles.popupTextLarge}>
                 {this.t("Mark pesticide calendar", this.props.lang)}
               </Text>
+              
+              <View
+                style={{flex: 1,
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+              >
+                <Text allowFontScaling={false} style={{fontSize: 18}}>
+                  {this.t("DATE", this.props.lang)}: {this.props.selectedDate}
+                </Text>
+                <View>
+                  <DateTimePicker 
+                      
+                      value={new Date(this.props.selectedDate)}
+                      display="default"
+                      mode="time"
+                      is24Hour={true}
+                      onChange={this.onChangeTemporalDate1}
+                      style={{
+                        width: 80,
+                        height: 45,
+                        color: "white",
+                      }}
+                  />
+                </View>
 
-              <Text allowFontScaling={false} style={styles.popupText}>
-                {this.t("DATE", this.props.lang)}: {this.props.selectedDate}
-              </Text>
+              </View>
 
               <RadioForm formHorizontal={false} initial={1} animation={true}>
                 {this.getRadioProps(this.props.lang).map((obj, i) => (
@@ -182,6 +223,33 @@ export default class PesticideMark extends Component {
                   </RadioButton>
                 ))}
               </RadioForm>
+              {/* <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    backgroundColor: "#ffffff",
+                    borderRadius: 25
+                  }}
+                >
+                  <DateTimePicker
+                    value={new Date(this.props.selectedDate)}
+                    // minimumDate={new Date(1598051730000)}
+                    // maximumDate={
+                    //   new Date(this.state.temporalDateSelectedValue2.valueOf())
+                    // }
+                    display="default"
+                    mode="time"
+                    is24Hour={true}
+                    onChange={this.onChangeTemporalDate1}
+                    style={{
+                      width: 180,
+                      height: 45,
+                      color: "white",
+                      backgroundColor: "#ffffff"
+                    }}
+                  />
+              </View> */}
 
               <View
                 style={{
@@ -202,6 +270,7 @@ export default class PesticideMark extends Component {
                     {this.t("CONFIRM", this.props.lang)}
                   </Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   accessibilityRole="button"
                   style={styles.cancelBtn}
@@ -214,6 +283,17 @@ export default class PesticideMark extends Component {
                     {this.t("CANCEL", this.props.lang)}
                   </Text>
                 </TouchableOpacity>
+                
+{/* 
+                <TouchableOpacity 
+                  style={styles.confirmBtn} 
+                  //onPress={this.showTimepicker }
+                  //onPress={function(){ console.log('按到我了')}}
+                >
+                  <Text style={styles.buttonText}> TouchableOpacity Button </Text>
+                </TouchableOpacity> */}
+
+
               </View>
             </View>
           </View>

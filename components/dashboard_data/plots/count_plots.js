@@ -50,7 +50,7 @@ var widthAdjustment = 1.22;
 import ModalInsectInfo from "../../modals/insect_info.js";
 
 import { TRANSLATIONS_ZH } from "../../../translations/zh/translations";
-import { TRANSLATIONS_EN } from "../../../translations/en/translations";
+// import { TRANSLATIONS_EN } from "../../../translations/en/translations";
 
 export default class CountPlots extends Component {
   constructor() {
