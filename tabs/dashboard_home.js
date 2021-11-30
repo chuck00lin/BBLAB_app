@@ -223,7 +223,7 @@ export default class DashboardHome extends Component {
           var m_date = new moment(d, "YYYY-MM-DD");
           pesticideMarks.push({
             date: m_date,
-            style: { backgroundColor: "#ff0000" },
+            style: { backgroundColor: "#e86879" },
             textStyle: { color: "black" },
             containerStyle: [],
             allowDisabled: true
@@ -236,6 +236,26 @@ export default class DashboardHome extends Component {
         });
       });
   }
+
+  // -testing: show new api's time 
+  fetchPesticideCalendarTime({ location }) {
+    var thisURL = "http://140.112.94.123:20000/PEST_DETECT/_app/data_pesticide_calendar_t.php?loc=TEST_GH";
+
+    //var thisURL = URL_getPesticideCalendar + "?loc=" + location;
+    // console.log(thisURL);
+    fetch(thisURL)
+      .then(response => response.json())
+      .then(response => {
+        var pesticideDATA = response;
+
+        pesticideDATA.time.map((t, i) => {
+          // var m_date = new moment(d, "YYYY-MM-DD");
+          console.log(t);
+          console.log(i);
+        });
+      });
+  }
+
 
   //
   // Get camera list, if there is
@@ -265,7 +285,7 @@ export default class DashboardHome extends Component {
   markCalendar({ data }) {
     var thisDate = data.data.date;
     var thisPesticide = data.data.pesticide;
-
+   
     var thisURL =
       URL_savepesticide +
       "?loc=" +
@@ -380,6 +400,7 @@ export default class DashboardHome extends Component {
       this.fetchLocalWeather({ location }),
       this.fetchCurrentDisease({ location }),
       this.fetchPesticideCalendar({ location }),
+      this.fetchPesticideCalendarTime({ location }),
       this.fetchSurveillanceCameras({ location })
     ]);
     AsyncStorage.setItem("locationSelected", location);

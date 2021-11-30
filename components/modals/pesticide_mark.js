@@ -24,14 +24,11 @@ import RadioForm, {
 } from "react-native-simple-radio-button";
 import moment from "moment";
 import DateTimePicker from '@react-native-community/datetimepicker';
-//import DatePicker from 'rsuite/DatePicker';
 
 
-var radio_colors = ["#ff0000", "#000000"];
+var radio_colors = ["#000000", "#000000"];
 
-//
-// URLS
-//
+{/*URLS*/}
 const base_url = "http://140.112.94.123:20000/PEST_DETECT_TEST/_app/";
 const URL_savePesticideDate = base_url + "save_pesticide_calendar.php";
 
@@ -77,6 +74,7 @@ export default class PesticideMark extends Component {
       { label: "Did not spray pesticides", value: 1 }
     ];
     console.log(lang);
+    
     if (lang == "en") {
       radio_props = [
         { label: "Sprayed pesticides", value: 0 },
@@ -122,6 +120,10 @@ export default class PesticideMark extends Component {
         if (status == 1) {
           this.notifyMessage("Successful!");
         }
+      })
+      .catch((error) => {
+        console.log('pest error:');
+        console.error(error);
       });
   };
   //test timepicker
@@ -283,17 +285,6 @@ export default class PesticideMark extends Component {
                     {this.t("CANCEL", this.props.lang)}
                   </Text>
                 </TouchableOpacity>
-                
-{/* 
-                <TouchableOpacity 
-                  style={styles.confirmBtn} 
-                  //onPress={this.showTimepicker }
-                  //onPress={function(){ console.log('按到我了')}}
-                >
-                  <Text style={styles.buttonText}> TouchableOpacity Button </Text>
-                </TouchableOpacity> */}
-
-
               </View>
             </View>
           </View>
