@@ -17,11 +17,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ntu.bime.pest",
-      "buildNumber": "2.4.1"
+      "buildNumber": "2.4.2"
     },
     "android": {
       "package": "com.ntubime405.i2pdmx",
-      "versionCode": 5,
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

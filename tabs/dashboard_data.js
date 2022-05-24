@@ -562,6 +562,7 @@ export default class DashboardData extends Component {
         this.state.temporalDateSelected1 +
         "&end=" +
         this.state.temporalDateSelected2;
+      console.log(thisURL);
     if (this.state.freqSelected == 3)
       var thisURL = URL_getMonthlyEnvi + "?loc=" + location;
 

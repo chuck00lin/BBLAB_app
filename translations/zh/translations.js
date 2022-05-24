@@ -133,8 +133,8 @@ export const TRANSLATIONS_ZH = {
   "Insect characteristics": "昆蟲特徵",
   "Disease characteristics": "病害特徵",
   "Typical size": "平均大小",
-  "Min. niche temperature": "最低活躍溫度",
-  "Peak niche temperature": "尖峰活躍溫度",
+  "Min. niche temperature": "病害暫緩發展溫度",
+  "Peak niche temperature": "病害適合發展溫度",
   "Max. niche temperature": "最高活躍溫度",
   "Humidity requirement": "濕度",
 
