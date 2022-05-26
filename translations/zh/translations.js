@@ -106,7 +106,7 @@ export const TRANSLATIONS_ZH = {
   "Mark pesticide calendar": "施藥紀錄",
 
   "Insect count data": "昆蟲數量",
-  INFO: "資訊",
+  INFO: "訊息",
   NAME: "名字",
   ALARM: "警報",
   TOTAL: "總和",

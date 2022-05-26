@@ -258,7 +258,7 @@ export default class DashboardSummaryBox extends Component {
                     allowFontScaling={false}
                     style={[styles.countColumnTitle, { flex: 0.4 }]}
                   >
-                    {this.t("NAME", this.props.lang)}
+                    {this.t("DISEASE", this.props.lang)}
                   </Text>
                   <Text
                     allowFontScaling={false}
