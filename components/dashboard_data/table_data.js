@@ -191,7 +191,9 @@ export default class TableData extends Component {
                               allowFontScaling={false}
                               style={{ fontSize: 16 }}
                             >
-                              {this.props.tableDATA.envi_data[envi][i]}
+                              {/* @lin 20220729 */}
+                              {this.props.tableDATA.envi_data[envi][i] != -40? 
+                              this.props.tableDATA.envi_data[envi][i]: "--" }
                             </Text>
                             <Text
                               allowFontScaling={false}
