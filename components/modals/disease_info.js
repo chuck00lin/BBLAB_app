@@ -334,7 +334,7 @@ export default class DiseaseInfo extends Component {
                     {this.state.t_ranges[1]}°C
                   </Text>
                   <Text allowFontScaling={false} style={{ fontSize: 12 }}>
-                    {this.t("Humidity requirement", this.props.lang)}: >
+                    {this.t("Humidity requirement", this.props.lang)}: {">"}
                     {this.state.humidity}%
                   </Text>
                 </View>

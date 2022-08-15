@@ -22,6 +22,9 @@ import ModalInsectInfo from "../modals/insect_info.js";
 import ModalDiseaseInfo from "../modals/disease_info.js";
 import ModalPesticideMark from "../modals/pesticide_mark.js";
 
+//2022-8-3-Summarydisease
+import SummaryDisease from "./components/summary_disease";
+
 import { TRANSLATIONS_ZH } from "../../translations/zh/translations";
 import { TRANSLATIONS_EN } from "../../translations/en/translations";
 var day_now = new moment();
@@ -98,6 +101,7 @@ export default class DashboardSummaryBox extends Component {
       selectedDate: "",
       selectedDate2: "",
       previousDate: ""
+      
     };
   }
 
@@ -789,6 +793,18 @@ export default class DashboardSummaryBox extends Component {
         {/* #Disease data */}
         {/*  */}
         {this.showDiseaseData()}
+        
+        <View>
+          <Text>
+            {this.props.diseaseDATA.crops[0]}
+          </Text>
+        </View>
+
+        <SummaryDisease
+          ref="SummaryDisease"
+          diseaseDATA={this.props.diseaseDATA}
+          lang={this.props.lang}
+        />
 
         {/*  */}
         {/* Weather data */}
