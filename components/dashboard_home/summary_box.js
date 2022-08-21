@@ -794,17 +794,31 @@ export default class DashboardSummaryBox extends Component {
         {/*  */}
         {this.showDiseaseData()}
         
-        <View>
-          <Text>
-            {this.props.diseaseDATA.crops[0]}
-          </Text>
-        </View>
-
+        {/*  */}
+        {/* Scroll Disease data */}
+        {/*  */}
         <SummaryDisease
-          ref="SummaryDisease"
-          diseaseDATA={this.props.diseaseDATA}
-          lang={this.props.lang}
+                  ref="SummaryDisease"
+                  diseaseDATA={this.props.diseaseDATA}
+                  lang={this.props.lang}
         />
+        <View style={{marginTop: 0,marginBottom:10}}>
+              <ScrollView
+                horizontal= {true}
+                showsHorizontalScrollIndicator= {false}
+              >
+                <SummaryDisease
+                  ref="SummaryDisease"
+                  diseaseDATA={this.props.diseaseDATA}
+                  lang={this.props.lang}
+                />
+                <SummaryDisease
+                  ref="SummaryDisease"
+                  diseaseDATA={this.props.diseaseDATA}
+                  lang={this.props.lang}
+                />
+              </ScrollView>
+        </View>
 
         {/*  */}
         {/* Weather data */}

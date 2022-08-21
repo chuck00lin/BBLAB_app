@@ -15,6 +15,10 @@ import {
 import { TRANSLATIONS_ZH } from "../../../translations/zh/translations";
 import { TRANSLATIONS_EN } from "../../../translations/en/translations";
 
+const alarmColors = ["#489147", "#0000ff", "#ff7930", "#ffc72b", "#ff0000"];
+const alarmNames = ["LOW", "GUARDED", "MODERATE", "HIGH", "SEVERE"];
+const boxColor = "#f7f7f7";
+
 //
 // URLS
 //
@@ -54,6 +58,35 @@ export default class SummaryDisease extends Component {
         if (this.props.lang == "zh") return 14;
         else return 12;
     };
+
+  //
+  // Disease alarm box
+  //
+  diseaseAlarmBox = d => {
+    return (
+      <View
+        style={[
+          styles.diseaseAlarmBox,
+          { backgroundColor: alarmColors[Number(d)] }
+        ]}
+      >
+        <Text
+          allowFontScaling={false}
+          style={[
+            styles.diseaseName,
+            { textAlign: "center", fontSize: this.fontSizeENCN2() }
+          ]}
+        >
+          {this.t(alarmNames[Number(d)], this.props.lang)}
+        </Text>
+      </View>
+    );
+  };
+
+  diseaseName = (disease, lang) => {
+    if (lang == "zh") return disease.disease_name_cn;
+    else return disease.disease_name;
+  };
     
     showDiseaseData = () => {
         var cropName = this.props.diseaseDATA.crops[0];
@@ -71,7 +104,7 @@ export default class SummaryDisease extends Component {
               {/* Get per crop  */}
               {this.props.diseaseDATA.crops.map((crop, i) => {
                 return (
-                  <View key={i} style={styles.diseaseDataBox}>
+                  <View key={i} style={{flex:1}}>
                     <View style={{ flex: 1, flexDirection: "row", height: 25 }}>
                       <Text
                         allowFontScaling={false}
@@ -132,7 +165,7 @@ export default class SummaryDisease extends Component {
                                 this.setState({
                                   showDiseaseInfoPopup: true
                                 });
-                                this.refs.diseaseInfo.fetchDiseaseInfo(
+                                this.diseaseInfo.fetchDiseaseInfo(
                                   disease.disease_name,
                                   location
                                 );
@@ -199,16 +232,16 @@ export default class SummaryDisease extends Component {
       };
 
 render() {
-    {this.showDiseaseData()}
+    // {this.showDiseaseData()}
     return (
         <View>
-            
-            <Text>
+          {this.showDiseaseData()}
+            {/* <Text>
                 ccc
                 {this.props.diseaseDATA.crops[0]}
                 {this.state.location}
                 dddd
-            </Text>
+            </Text> */}
         </View>
     )
   }
@@ -229,13 +262,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10
   },
-
+  dataTitle: {
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 14,
+    flex: 1,
+    color: "#000000",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    letterSpacing: 1
+  },
   pesticideBox: {
     height: 300,
     backgroundColor: "#ff0000",
     width: 300
   },
-
+  countColumnTitle: {
+    height: 20,
+    marginRight: 5,
+    textAlign: "left",
+    marginTop: 5,
+    fontSize: 12,
+    color: "#000000"
+  },
   countNameBox: {
     height: 30,
     width: 80,
@@ -267,5 +316,63 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 10,
     paddingHorizontal: 10
-  }
+  },
+  diseaseBox: {
+    width: 360, //RWD 只適合iphone 13
+    alignSelf: "stretch",
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 15,
+    flex: 1,
+    borderRadius: 10,
+    backgroundColor: boxColor,
+    padding: 5,
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  diseaseCropTitle: {
+    height: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 16,
+    color: "#000000"
+  },
+  diseaseAlarmBox: {
+    height: 40,
+    flex: 0.23,
+    marginRight: 5,
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#550d80",
+    borderRadius: 10
+  },
+  diseaseName: {
+    padding: 5,
+    fontSize: 14,
+    textAlign: "center",
+    color: "#ffffff",
+    alignItems: "center",
+    borderRadius: 10
+  },
+  diseaseNameBox: {
+    height: 40,
+    flex: 0.4,
+    marginRight: 5,
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#550d80",
+    borderRadius: 10
+  },
+  valueContainer: {
+    flexDirection: "row",
+    flex: 1,
+    textAlign: "left",
+    alignItems: "flex-start"
+  },
+  enviIcon: {
+    width: 40,
+    height: 40
+  },
 });
