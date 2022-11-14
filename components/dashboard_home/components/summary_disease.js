@@ -31,7 +31,7 @@ export default class SummaryDisease extends Component {
       this.state = {
         inputColor: "white",
         authorizationCode: 0,
-        disease: "",
+        disease: [], //"" to []_2022/11/11
         location: "",
         info: [],
         t_ranges: [],
@@ -78,6 +78,7 @@ export default class SummaryDisease extends Component {
           ]}
         >
           {this.t(alarmNames[Number(d)], this.props.lang)}
+          ddfiojs
         </Text>
       </View>
     );
@@ -100,7 +101,7 @@ export default class SummaryDisease extends Component {
                   {this.t("Plant disease severity risk index", this.props.lang)}
                 </Text>
               </View>
-    
+              
               {/* Get per crop  */}
               {this.props.diseaseDATA.crops.map((crop, i) => {
                 return (
@@ -181,7 +182,7 @@ export default class SummaryDisease extends Component {
                                   }
                                 ]}
                                 source={{
-                                  // console.log(response.diseases["Tomato"]);
+                                  // console.log(response.diseases["Tomato"]),
                                   uri: this.props.diseaseDATA.diseases[crop][j]
                                     .image
                                 }}

@@ -50,7 +50,7 @@ const ANDROID_LINK = info2["android_link"];
 const IOS_LINK = info2["ios_link"];
 
 export default function Login({ navigation }) {
-  const [lang, setLanguage] = useState("en");
+  const [lang, setLanguage] = useState("zh");
   const [autoLogin, setIsEnabled] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [username, onChangeUsername] = useState("");

@@ -76,6 +76,7 @@ import {
   VictoryLegend
 } from "victory-native";
 import { Svg, G, Path } from "react-native-svg";
+import { FlatList } from "react-native-gesture-handler";
 const legend_mapper = (data1, data2) => {
   var sum = data2.reduce(function(a, b) {
     return a + b;
@@ -769,6 +770,7 @@ export default class DashboardSummaryBox extends Component {
                       allowFontScaling={false}
                       style={styles.countValueText}
                     >
+                      {i}
                       {Number(this.props.countDATA.total_counts[i]).toFixed(0)}
                     </Text>
 
@@ -790,9 +792,26 @@ export default class DashboardSummaryBox extends Component {
         </View>
 
         {/*  */}
-        {/* #Disease data */}
+        {/* #Disease data (./components/summary_disease.js)*/}
         {/*  */}
-        {this.showDiseaseData()}
+        <ScrollView
+          horizontal={true}
+        >
+          {this.props.countDATA.species.map((specie, i) => {
+            return (
+              <View key={i}>
+                <Text
+                  allowFontScaling={false}
+                  style={styles.diseaseValueText}
+                >
+                  number:{i}
+                </Text>
+                {this.showDiseaseData()}
+              </View>
+            );
+          })}
+        </ScrollView>
+
         
         {/*  */}
         {/* Scroll Disease data */}
@@ -803,9 +822,10 @@ export default class DashboardSummaryBox extends Component {
                   lang={this.props.lang}
         />
         <View style={{marginTop: 0,marginBottom:10}}>
-              <ScrollView
+
+          <ScrollView
                 horizontal= {true}
-                showsHorizontalScrollIndicator= {false}
+                showsHorizontalScrollIndicator= {true}
               >
                 <SummaryDisease
                   ref="SummaryDisease"
@@ -817,7 +837,12 @@ export default class DashboardSummaryBox extends Component {
                   diseaseDATA={this.props.diseaseDATA}
                   lang={this.props.lang}
                 />
-              </ScrollView>
+                <SummaryDisease
+                  ref="SummaryDisease"
+                  diseaseDATA={this.props.diseaseDATA}
+                  lang={this.props.lang}
+                />
+          </ScrollView>
         </View>
 
         {/*  */}
