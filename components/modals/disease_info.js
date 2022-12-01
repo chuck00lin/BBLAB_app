@@ -48,9 +48,10 @@ export default class DiseaseInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showDiseaseInfoPopup:false,//1127
       inputColor: "white",
       authorizationCode: 0,
-      disease: "",
+      disease: [],
       location: "",
       info: [],
       t_ranges: [],
@@ -334,7 +335,7 @@ export default class DiseaseInfo extends Component {
                     {this.state.t_ranges[1]}°C
                   </Text>
                   <Text allowFontScaling={false} style={{ fontSize: 12 }}>
-                    {this.t("Humidity requirement", this.props.lang)}: >
+                    {this.t("Humidity requirement", this.props.lang)}: {">"}
                     {this.state.humidity}%
                   </Text>
                 </View>

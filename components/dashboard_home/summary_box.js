@@ -22,6 +22,9 @@ import ModalInsectInfo from "../modals/insect_info.js";
 import ModalDiseaseInfo from "../modals/disease_info.js";
 import ModalPesticideMark from "../modals/pesticide_mark.js";
 
+//2022-8-3-Summarydisease
+import SummaryDisease from "./components/summary_disease";
+
 import { TRANSLATIONS_ZH } from "../../translations/zh/translations";
 import { TRANSLATIONS_EN } from "../../translations/en/translations";
 var day_now = new moment();
@@ -73,6 +76,7 @@ import {
   VictoryLegend
 } from "victory-native";
 import { Svg, G, Path } from "react-native-svg";
+import { FlatList } from "react-native-gesture-handler";
 const legend_mapper = (data1, data2) => {
   var sum = data2.reduce(function(a, b) {
     return a + b;
@@ -98,6 +102,7 @@ export default class DashboardSummaryBox extends Component {
       selectedDate: "",
       selectedDate2: "",
       previousDate: ""
+      
     };
   }
 
@@ -217,35 +222,49 @@ export default class DashboardSummaryBox extends Component {
   showDiseaseData = () => {
     var cropName = this.props.diseaseDATA.crops[0];
     var nDisease = this.props.diseaseDATA.diseases[cropName].length;
-
+    var tempList = ["Tomato", "Tomato"]; 
+    console.log("ccc", cropName);
+    console.log("ccc", this.props.diseaseDATA.crops);
+    console.log("ccc", nDisease);
     if (nDisease > 0) {
       return (
-        <View style={styles.diseaseBox}>
-          <View style={{ flex: 1, flexDirection: "row", height: 25 }}>
-            <Text allowFontScaling={false} style={styles.dataTitle}>
-              {this.t("Plant disease severity risk index", this.props.lang)}
-            </Text>
-          </View>
-
-          {/* Get per crop  */}
+        <View>
+        <ScrollView
+          horizontal={true}
+          pagingEnabled
+        >
           {this.props.diseaseDATA.crops.map((crop, i) => {
-            return (
-              <View key={i} style={styles.diseaseDataBox}>
-                <View style={{ flex: 1, flexDirection: "row", height: 25 }}>
-                  <Text
-                    allowFontScaling={false}
-                    style={styles.diseaseCropTitle}
-                  >
-                    {this.cropName(i, this.props.lang)}
-                  </Text>
-                </View>
 
+          console.log("map", crop);
+          return (
+            <View style={styles.diseaseBox}>
+              <View style={styles.diseaseNamebox}>
+                <Text
+                  allowFontScaling={false}
+                  style={styles.diseaseCropTitle}
+                >
+                  {this.cropName(i, this.props.lang)}
+                </Text>
+              </View>
+              
+              <View style={{ flex: 0, flexDirection: "row", height: 25 }}>
+                <Text allowFontScaling={false} style={styles.dataTitle}>
+                  {this.t("Plant disease severity risk index", this.props.lang)}
+                </Text>
+              </View>
+              
+              {/* Get per crop : this.props.diseaseDATA.crops*/}
+              <View key={i}  
+                style={{
+                  flex: 0,
+                }}
+              >
                 <View
                   style={{
                     flexDirection: "row",
                     height: 25,
                     flex: 1,
-                    marginLeft: 10
+                    marginLeft: 10,
                   }}
                 >
                   <Text
@@ -275,11 +294,11 @@ export default class DashboardSummaryBox extends Component {
                 </View>
 
                 {/* Get disease per crop  */}
-                {this.props.diseaseDATA.diseases[crop].map((disease, j) => {
+                {this.props.diseaseDATA.diseases[crop].map((disease, k) => {
                   return (
                     //  Disease name
                     <View
-                      key={j}
+                      key={k}
                       style={{ flex: 1, marginLeft: 15, marginBottom: 5 }}
                     >
                       <View style={styles.valueContainer}>
@@ -299,7 +318,7 @@ export default class DashboardSummaryBox extends Component {
                         >
                           <Image
                             style={[
-                              styles.enviIcon,
+                              styles.enviIcon,  
                               {
                                 borderRadius: 25,
                                 height: 35,
@@ -307,8 +326,8 @@ export default class DashboardSummaryBox extends Component {
                               }
                             ]}
                             source={{
-                              // console.log(response.diseases["Tomato"]);
-                              uri: this.props.diseaseDATA.diseases[crop][j]
+                              // console.log(response.diseases["Tomato"]),
+                              uri: this.props.diseaseDATA.diseases[crop][k]
                                 .image
                             }}
                           />
@@ -350,9 +369,11 @@ export default class DashboardSummaryBox extends Component {
                   );
                 })}
               </View>
-            );
+            </View>
+          );
           })}
-        </View>
+        </ScrollView>
+        </View> 
       );
     }
   };
@@ -765,6 +786,7 @@ export default class DashboardSummaryBox extends Component {
                       allowFontScaling={false}
                       style={styles.countValueText}
                     >
+                      {i}
                       {Number(this.props.countDATA.total_counts[i]).toFixed(0)}
                     </Text>
 
@@ -786,9 +808,61 @@ export default class DashboardSummaryBox extends Component {
         </View>
 
         {/*  */}
-        {/* #Disease data */}
+        {/* #Disease data (./components/summary_disease.js)*/}
         {/*  */}
         {this.showDiseaseData()}
+        {/* <View style={{marginTop: 0,marginBottom:10}}>
+          <ScrollView
+            horizontal={true}
+          >
+            {this.props.diseaseDATA.crops.map((crop, i) => {
+              console.log("crop_1127", crop);
+              return (
+                <View key={i}>
+                  <Text
+                    allowFontScaling={false}
+                    style={styles.diseaseValueText}
+                  >
+                    crop: {crop}
+                    number:{i}
+                  </Text>
+                  {this.showDiseaseData()}
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View> */}
+        
+        {/*  */}
+        {/* Scroll Disease data //---20221127---summery disease*/}
+        {/*  */}
+        {/* <View style={{marginTop: 0,marginBottom:10}}>
+          <ScrollView
+            horizontal={true}
+          >
+            {this.props.countDATA.species.map((specie, i) => {
+              return (
+                <View key={i}>
+                  <SummaryDisease
+                            ref="SummaryDisease"
+                            showDiseaseInfoPopup={this.showDiseaseInfoPopup}
+                            diseaseDATA={this.props.diseaseDATA}
+                            lang={this.props.lang}
+                  />
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View> */}
+        {/* ---Test --- */}
+
+        {/* <View style={{marginTop: 0,marginBottom:10}}>
+          <SummaryDisease
+                  ref="SummaryDisease"
+                  diseaseDATA={this.props.diseaseDATA}
+                  lang={this.props.lang}
+          />
+        </View> */}
 
         {/*  */}
         {/* Weather data */}
@@ -1060,11 +1134,14 @@ const styles = StyleSheet.create({
   // Disease
   //
   diseaseBox: {
-    alignSelf: "stretch",
+
+    width: 360, //RWD 只適合iphone 13,14
+    //alignSelf: "stretch",
+    flexDirection: "column",
+    flex: 1,
     marginLeft: 15,
     marginRight: 15,
     marginBottom: 15,
-    flex: 1,
     borderRadius: 10,
     backgroundColor: boxColor,
     padding: 5,
@@ -1271,5 +1348,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 10,
     marginTop: -5
-  }
+  },
+  diseaseNamebox: {
+    textAlign: "center",
+    alignItems: "center",
+  },
 });

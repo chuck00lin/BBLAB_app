@@ -88,77 +88,80 @@ const range = (start, end, step = 1) => {
 };
 
 export default class DashboardData extends Component {
-  state = {
-    lang: "en",
-    status: "0",
-    buttonColors: [],
-    city: "",
-    locations: [],
-    locationSelected: [],
-    actives: [],
-    nodes: [],
-    dataSelected: 1,
-    previousDataSelected: 1,
-    displaySelected: 1,
-    previousDisplaySelected: 1,
-    freqSelected: 2,
+  constructor(props) {
+    super(props);
+    this.state = {
+      lang: "en",
+      status: "0",
+      buttonColors: [],
+      city: "",
+      locations: [],
+      locationSelected: [],
+      actives: [],
+      nodes: [],
+      dataSelected: 1,
+      previousDataSelected: 1,
+      displaySelected: 1,
+      previousDisplaySelected: 1,
+      freqSelected: 2,
 
-    //  Sensor data
-    sensorDATA: [0],
-    sensorDATES: [""],
-    sensorDATESOUTPUT: [""],
-    sensorDATESINDICES: [0],
+      //  Sensor data
+      sensorDATA: [0],
+      sensorDATES: [""],
+      sensorDATESOUTPUT: [""],
+      sensorDATESINDICES: [0],
 
-    //  Count data
-    countDATA: [0],
-    countDATES: [""],
-    countDATESOUTPUT: [""],
-    countDATESINDICES: [0],
+      //  Count data
+      countDATA: [0],
+      countDATES: [""],
+      countDATESOUTPUT: [""],
+      countDATESINDICES: [0],
 
-    // Spatial data
-    spatialXCOORDS: [],
-    spatialYCOORDS: [],
-    spatialDATA: [],
-    spatialNAMES: [],
-    spatialNAMES_CN: [],
-    spatialDOORX: [],
-    spatialDOORY: [],
-    spatialNODESTATS: [],
-    spatialNODES: 0,
-    spatialIMAGES: [],
+      // Spatial data
+      spatialXCOORDS: [],
+      spatialYCOORDS: [],
+      spatialDATA: [],
+      spatialNAMES: [],
+      spatialNAMES_CN: [],
+      spatialDOORX: [],
+      spatialDOORY: [],
+      spatialNODESTATS: [],
+      spatialNODES: 0,
+      spatialIMAGES: [],
 
-    // Tabular data
-    tableNODES: [],
-    tableENVITYPES: [],
-    tableINSECTTYPES: [],
-    tableDATA: [],
+      // Tabular data
+      tableNODES: [],
+      tableENVITYPES: [],
+      tableINSECTTYPES: [],
+      tableDATA: [],
 
-    weatherDATA: [],
-    diseaseDATA: [],
-    diseaseDATES: [""],
-    diseaseDATESOUTPUT: [""],
-    diseaseDATESINDICES: [0],
-    disease_available: [0],
+      weatherDATA: [],
+      diseaseDATA: [],
+      diseaseDATES: [""],
+      diseaseDATESOUTPUT: [""],
+      diseaseDATESINDICES: [0],
+      disease_available: [0],
 
-    startDateIOS: day_now,
-    startDate: day_now3,
-    dateSelected: day_now3,
-    dateSelectedValue: day_now,
-    minDate: day_now,
-    maxDate: day_now,
-    selectDateVisible: false,
+      startDateIOS: day_now,
+      startDate: day_now3,
+      dateSelected: day_now3,
+      dateSelectedValue: day_now,
+      minDate: day_now,
+      maxDate: day_now,
+      selectDateVisible: false,
 
-    temporalDate1Visible: false,
-    temporalDate2Visible: false,
-    temporalDate1: days_before3,
-    temporalDate1IOS: days_before,
-    temporalDateSelected1: days_before3,
-    temporalDateSelectedValue1: days_before,
-    temporalDate2: day_now3,
-    temporalDate2IOS: day_now,
-    temporalDateSelected2: day_now3,
-    temporalDateSelectedValue2: day_now
-  };
+      temporalDate1Visible: false,
+      temporalDate2Visible: false,
+      temporalDate1: days_before3,
+      temporalDate1IOS: days_before,
+      temporalDateSelected1: days_before3,
+      temporalDateSelectedValue1: days_before,
+      temporalDate2: day_now3,
+      temporalDate2IOS: day_now,
+      temporalDateSelected2: day_now3,
+      temporalDateSelectedValue2: day_now
+    };
+  }
 
   async fetchMinMaxDate() {
     var thisURL = URL_report_details + "?loc=" + this.state.locationSelected;
