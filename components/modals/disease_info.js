@@ -48,9 +48,10 @@ export default class DiseaseInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showDiseaseInfoPopup:false,//1127
       inputColor: "white",
       authorizationCode: 0,
-      disease: "",
+      disease: [],
       location: "",
       info: [],
       t_ranges: [],

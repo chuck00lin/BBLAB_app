@@ -10,7 +10,9 @@ import {
   Modal,
   ToastAndroid,
   Platform,
-  AlertIOS
+  AlertIOS,
+  //20221127
+  Animated
 } from "react-native";
 import { TRANSLATIONS_ZH } from "../../../translations/zh/translations";
 import { TRANSLATIONS_EN } from "../../../translations/en/translations";
@@ -40,7 +42,10 @@ export default class SummaryDisease extends Component {
         crops: [],
         pesticides: [],
         loaded: 0,
-        size: ""
+        size: "",
+        //
+        indicator: new Animated.Value(0)
+
       };
     }
   
@@ -78,7 +83,7 @@ export default class SummaryDisease extends Component {
           ]}
         >
           {this.t(alarmNames[Number(d)], this.props.lang)}
-          ddfiojs
+          
         </Text>
       </View>
     );
@@ -92,19 +97,35 @@ export default class SummaryDisease extends Component {
     showDiseaseData = () => {
         var cropName = this.props.diseaseDATA.crops[0];
         var nDisease = this.props.diseaseDATA.diseases[cropName].length;
-    
+        var tempList = ["Tomato", "Tomato", "Tomato", "Tomato", "Tomato"]; 
+        
         if (nDisease > 0) {
           return (
-            <View style={styles.diseaseBox}>
-              <View style={{ flex: 1, flexDirection: "row", height: 25 }}>
-                <Text allowFontScaling={false} style={styles.dataTitle}>
-                  {this.t("Plant disease severity risk index", this.props.lang)}
-                </Text>
-              </View>
-              
-              {/* Get per crop  */}
-              {this.props.diseaseDATA.crops.map((crop, i) => {
-                return (
+            <View>
+            <ScrollView
+              horizontal={true}
+              pagingEnabled
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: {x: this.state.indicator } } }]
+              )}
+              scrollEventThrottle={16}
+            >
+              {tempList.map((crop, i) => {
+
+              console.log("map", crop);
+              return (
+                <View style={styles.diseaseBox}>
+                  <View style={styles.diseaseNamebox}> 
+                    <Text style={styles.dataTitle}>{crop}</Text>
+                  </View>
+
+                  <View style={{ flex: 1, flexDirection: "row", height: 25 }}>
+                    <Text allowFontScaling={false} style={styles.dataTitle}>
+                      {this.t("Plant disease severity risk index", this.props.lang)}
+                    </Text>
+                  </View>
+                  
+                  {/* Get per crop : this.props.diseaseDATA.crops*/}
                   <View key={i} style={{flex:1}}>
                     <View style={{ flex: 1, flexDirection: "row", height: 25 }}>
                       <Text
@@ -150,11 +171,11 @@ export default class SummaryDisease extends Component {
                     </View>
     
                     {/* Get disease per crop  */}
-                    {this.props.diseaseDATA.diseases[crop].map((disease, j) => {
+                    {this.props.diseaseDATA.diseases[crop].map((disease, k) => {
                       return (
                         //  Disease name
                         <View
-                          key={j}
+                          key={k}
                           style={{ flex: 1, marginLeft: 15, marginBottom: 5 }}
                         >
                           <View style={styles.valueContainer}>
@@ -183,7 +204,7 @@ export default class SummaryDisease extends Component {
                                 ]}
                                 source={{
                                   // console.log(response.diseases["Tomato"]),
-                                  uri: this.props.diseaseDATA.diseases[crop][j]
+                                  uri: this.props.diseaseDATA.diseases[crop][k]
                                     .image
                                 }}
                               />
@@ -225,10 +246,13 @@ export default class SummaryDisease extends Component {
                       );
                     })}
                   </View>
-                );
+                </View>
+              );
               })}
-            </View>
+            </ScrollView>
+            </View> 
           );
+          
         }
       };
 
@@ -375,5 +399,9 @@ const styles = StyleSheet.create({
   enviIcon: {
     width: 40,
     height: 40
+  },
+  diseaseNamebox: {
+    textAlign: "center",
+    alignItems: "center",
   },
 });
