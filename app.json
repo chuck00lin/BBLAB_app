@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ntu.bime.pest",
-      "buildNumber": "2.5.1"
+      "buildNumber": "2.6.1"
     },
     "android": {
       "package": "com.ntubime405.i2pdmx",
