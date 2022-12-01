@@ -2,7 +2,7 @@
   "expo": {
     "name": "I2PDMx",
     "slug": "i2pdmx",
-    "version": "2.5",
+    "version": "2.6",
     "orientation": "portrait",
     "icon": "./assets/icon_512.png",
     "splash": {
