@@ -97,6 +97,8 @@ export default class DashboardSummaryBox extends Component {
       showInsectInfoPopup: false,
       showDiseaseInfoPopup: false,
       showPesticideMarkPopup: false,
+      //---state---20221206
+      // isDiseaseIconDisabled: false,
       selectedInsect: "",
       selectedLocation: "",
       selectedDate: "",
@@ -121,6 +123,10 @@ export default class DashboardSummaryBox extends Component {
       selectedDate2: datey
     });
   };
+
+  // disableDiseaseIcon = () => {
+  //   this.setState({ isDiseaseIconDisabled: true });
+  // };
 
   hideInsectInfoPopup = () => {
     this.setState({ showInsectInfoPopup: false });
@@ -222,10 +228,12 @@ export default class DashboardSummaryBox extends Component {
   showDiseaseData = () => {
     var cropName = this.props.diseaseDATA.crops[0];
     var nDisease = this.props.diseaseDATA.diseases[cropName].length;
-    var tempList = ["Tomato", "Tomato"]; 
-    console.log("ccc", cropName);
-    console.log("ccc", this.props.diseaseDATA.crops);
-    console.log("ccc", nDisease);
+    //var tempList = ["Tomato", "Tomato"]; 
+    console.log("[summary_box.js(showDiseaseData)]",this.props.diseaseDATA.crops)
+    //console.log("ccc", nDisease);
+
+    const checkIfDiseaseOnList = (diseaseName, cropName) => {
+    }
     if (nDisease > 0) {
       return (
         <View>
@@ -234,8 +242,6 @@ export default class DashboardSummaryBox extends Component {
           pagingEnabled
         >
           {this.props.diseaseDATA.crops.map((crop, i) => {
-
-          console.log("map", crop);
           return (
             <View style={styles.diseaseBox}>
               <View style={styles.diseaseNamebox}>
@@ -252,7 +258,7 @@ export default class DashboardSummaryBox extends Component {
                   {this.t("Plant disease severity risk index", this.props.lang)}
                 </Text>
               </View>
-              
+
               {/* Get per crop : this.props.diseaseDATA.crops*/}
               <View key={i}  
                 style={{
@@ -292,10 +298,10 @@ export default class DashboardSummaryBox extends Component {
                     {this.t("PROBABILITY", this.props.lang)}
                   </Text>
                 </View>
-
                 {/* Get disease per crop  */}
                 {this.props.diseaseDATA.diseases[crop].map((disease, k) => {
                   return (
+                    //console.log("uri", this.props.diseaseDATA.diseases[crop][k].image),
                     //  Disease name
                     <View
                       key={k}
@@ -305,6 +311,7 @@ export default class DashboardSummaryBox extends Component {
                         {/* Information */}
                         <TouchableOpacity
                           style={{ flex: 0.15 }}
+                          // disabled={true}
                           onPress={() => {
                             var location = this.props.location;
                             this.setState({
@@ -312,7 +319,8 @@ export default class DashboardSummaryBox extends Component {
                             });
                             this.refs.diseaseInfo.fetchDiseaseInfo(
                               disease.disease_name,
-                              location
+                              location,
+                              crop
                             );
                           }}
                         >
@@ -327,8 +335,7 @@ export default class DashboardSummaryBox extends Component {
                             ]}
                             source={{
                               // console.log(response.diseases["Tomato"]),
-                              uri: this.props.diseaseDATA.diseases[crop][k]
-                                .image
+                              uri: this.props.diseaseDATA.diseases[crop][k].image
                             }}
                           />
                         </TouchableOpacity>
@@ -872,95 +879,100 @@ export default class DashboardSummaryBox extends Component {
             <Text allowFontScaling={false} style={styles.dataTitle}>
               {this.t("Weather data", this.props.lang)}
             </Text>
-            {/* <Switch
-              style={[styles.switch, { transform: [{ scaleX: 1.1 }] }]}
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
-              thumbColor={this.state.enabledWeather ? "#f5dd4b" : "#f4f3f4"}
-              onValueChange={this.toggleWeather}
-              value={this.state.enabledWeather}
-            /> */}
           </View>
           <View>
             <Text allowFontScaling={false} style={styles.subTitle}>
               {this.cityName()}
             </Text>
           </View>
+          {/*--- CWB error handle{ : }
+            First View: Temp, Humidity, Rain | second View: Wind */}   
+          {(Number(this.props.weatherDATA.T).toFixed(0) >0) ?
+            <View> 
+              <View style={[styles.dataBox, { flexDirection: "row" }]}>
+                <View style={{ flex: 1 }}>
+                  <Text allowFontScaling={false} style={styles.dataLabel}>
+                    {this.t("TEMPERATURE", this.props.lang)}
+                  </Text>
+                  <View style={styles.valueContainer}>
+                    <Image
+                      style={styles.enviIcon}
+                      source={require("../../assets/t.png")}
+                    />
+                    {(Number(this.props.weatherDATA.T).toFixed(0) >0) ?
+                      <View style={{flexDirection: 'row'}}>
+                        <Text allowFontScaling={false} style={styles.valueText}>
+                          {Number(this.props.weatherDATA.T).toFixed(0)}
+                        </Text>
+                        <Text allowFontScaling={false} style={styles.valueUnitText} >
+                          &deg;C
+                        </Text>
+                      </View> :
+                      <Text allowFontScaling={false} style={styles.valueText}> CWB-NA</Text>
+                    }
+                  </View>
+                </View>
 
-          <View style={[styles.dataBox, { flexDirection: "row" }]}>
-            <View style={{ flex: 1 }}>
-              <Text allowFontScaling={false} style={styles.dataLabel}>
-                {this.t("TEMPERATURE", this.props.lang)}
-              </Text>
-              <View style={styles.valueContainer}>
-                <Image
-                  style={styles.enviIcon}
-                  source={require("../../assets/t.png")}
-                />
-                <Text allowFontScaling={false} style={styles.valueText}>
-                  {Number(this.props.weatherDATA.T).toFixed(0)}
-                </Text>
-                <Text allowFontScaling={false} style={styles.valueUnitText}>
-                  &deg;C
-                </Text>
+                <View style={{ flex: 1 }}>
+                  <Text allowFontScaling={false} style={styles.dataLabel}>
+                    {this.t("HUMIDITY", this.props.lang)}
+                  </Text>
+                  <View style={styles.valueContainer}>
+                    <Image
+                      style={styles.enviIcon}
+                      source={require("../../assets/h.png")}
+                    />
+                    <Text allowFontScaling={false} style={styles.valueText}>
+                      {Number(this.props.weatherDATA.H).toFixed(0)}
+                    </Text>
+                    <Text allowFontScaling={false} style={styles.valueUnitText}>
+                      %
+                    </Text>
+                  </View>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text allowFontScaling={false} style={styles.dataLabel}>
+                    {this.t("RAIN PROBABILITY", this.props.lang)}
+                  </Text>
+                  <View style={styles.valueContainer}>
+                    <Image
+                      style={styles.enviIcon}
+                      source={require("../../assets/rpop.png")}
+                    />
+                    <Text allowFontScaling={false} style={styles.valueText}>
+                      {this.props.weatherDATA.RPOP}
+                    </Text>
+                    <Text allowFontScaling={false} style={styles.valueUnitText}>
+                      %
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={[styles.dataBox, { flexDirection: "row" }]}>
+                <View style={{ flex: 1 }}>
+                  <Text allowFontScaling={false} style={styles.dataLabel}>
+                    {this.t("WIND SPEED", this.props.lang)}
+                  </Text>
+                  <View style={styles.valueContainer}>
+                    <Image
+                      style={styles.enviIcon}
+                      source={require("../../assets/ws.png")}
+                    />
+                    <Text allowFontScaling={false} style={styles.valueText}>
+                      {this.props.weatherDATA.WS}
+                    </Text>
+                    <Text allowFontScaling={false} style={styles.valueUnitText}>
+                      m/s
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
-
-            <View style={{ flex: 1 }}>
-              <Text allowFontScaling={false} style={styles.dataLabel}>
-                {this.t("HUMIDITY", this.props.lang)}
-              </Text>
-              <View style={styles.valueContainer}>
-                <Image
-                  style={styles.enviIcon}
-                  source={require("../../assets/h.png")}
-                />
-                <Text allowFontScaling={false} style={styles.valueText}>
-                  {Number(this.props.weatherDATA.H).toFixed(0)}
-                </Text>
-                <Text allowFontScaling={false} style={styles.valueUnitText}>
-                  %
-                </Text>
-              </View>
+            : 
+            <View style={[styles.dataBox, { flexDirection: "row" }]}>
+              <Text>氣象局資料目前無法正常抓取</Text>
             </View>
-
-            <View style={{ flex: 1 }}>
-              <Text allowFontScaling={false} style={styles.dataLabel}>
-                {this.t("RAIN PROBABILITY", this.props.lang)}
-              </Text>
-              <View style={styles.valueContainer}>
-                <Image
-                  style={styles.enviIcon}
-                  source={require("../../assets/rpop.png")}
-                />
-                <Text allowFontScaling={false} style={styles.valueText}>
-                  {this.props.weatherDATA.RPOP}
-                </Text>
-                <Text allowFontScaling={false} style={styles.valueUnitText}>
-                  %
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={[styles.dataBox, { flexDirection: "row" }]}>
-            <View style={{ flex: 1 }}>
-              <Text allowFontScaling={false} style={styles.dataLabel}>
-                {this.t("WIND SPEED", this.props.lang)}
-              </Text>
-              <View style={styles.valueContainer}>
-                <Image
-                  style={styles.enviIcon}
-                  source={require("../../assets/ws.png")}
-                />
-                <Text allowFontScaling={false} style={styles.valueText}>
-                  {this.props.weatherDATA.WS}
-                </Text>
-                <Text allowFontScaling={false} style={styles.valueUnitText}>
-                  m/s
-                </Text>
-              </View>
-            </View>
-          </View>
+          }
 
           <ScrollView
             style={{
@@ -1134,7 +1146,7 @@ const styles = StyleSheet.create({
   // Disease
   //
   diseaseBox: {
-
+    
     width: 360, //RWD 只適合iphone 13,14
     //alignSelf: "stretch",
     flexDirection: "column",

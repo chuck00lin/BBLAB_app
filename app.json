@@ -13,11 +13,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ntu.bime.pest",
-      "buildNumber": "2.6.1"
+      "buildNumber": "2.6.3"
     },
     "android": {
       "package": "com.ntubime405.i2pdmx",
@@ -29,6 +31,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "912359cd-a347-4520-858e-6716b054ad44"
+      }
     }
   }
 }

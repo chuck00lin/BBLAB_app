@@ -20,7 +20,8 @@ import {
   PixelRatio
 } from "react-native";
 import Logo from "../components/i2pdm_logo.js";
-import Select from "react-native-picker-select";
+//import Select from "react-native-picker-select";
+import RNPickerSelect from 'react-native-picker-select';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -393,18 +394,32 @@ export default function Login({ navigation }) {
 
       {/* Choose language */}
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Select
+        {/* <Select
           allowFontScaling={false}
           placeholder={{
-            label: "English (英文)",
-            value: "en"
+            label: "Chinese (中文)",
+            value: "zh"
           }}
           onValueChange={value => saveLanguage(value)}
           useNativeAndroidPickerStyle={false}
           style={dropDownBtn}
-          items={[{ label: "Chinese (中文)", value: "zh" }]}
+          items={[{ label: "English (英文)", value: "en" }]}
           value={lang}
-        />
+        /> */}
+        <RNPickerSelect
+          allowFontScaling={false}
+          placeholder={{
+            label: "Chinese (中文)",
+            value: "zh"
+          }}
+          onValueChange={value => saveLanguage(value)}
+          useNativeAndroidPickerStyle={false}
+          style={dropDownBtn}
+          items={[
+            { label: 'English (英文)', value: 'en' },
+          ]}
+          value={lang}
+        /> 
       </View>
     </View>
   );

@@ -73,11 +73,12 @@ export default class DiseaseInfo extends Component {
   //
   // Fetch insect info
   //
-  fetchDiseaseInfo = (disease, location) => {
-    var thisURL = URL_disease_info + "?disease=" + disease + "&loc=" + location;
+  fetchDiseaseInfo = (disease, location, crop) => {
+    var thisURL = URL_disease_info + "?disease=" + disease + "&loc=" + location + "&crop=" + crop;
 
     this.setState({ disease: disease, location: location });
     console.log("[disease_info.js]", thisURL);
+    console.log("[disease_info.js_variable:", disease, location,"]");
     fetch(thisURL)
       .then(response => response.json())
       .then(response => {
